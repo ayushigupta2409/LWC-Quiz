@@ -1,0 +1,45 @@
+<template>
+    <lightning-card title="quiz-card">
+        <!--margin around medium gives margin around div so div doesn't touch card-->
+        <div class="slds-m-around_medium">
+        Try answering the following questions:
+        <form>
+
+            <template for:each={myquestions} for:item="quiz">
+                <!--inside this we create a div as a refer, and we give it a margin of medium size-->
+                <div key={quiz.id} class="slds-m-bottom_medium">
+                    <div><strong>{quiz.id}-{quiz.question}</strong></div>
+                    <!-- and we give it a padding of medium size for spacing between questions-->
+                    <div class="slds-grid slds-gutters slds-p-bottom_medium">
+                        <div class="slds-col">
+                            <input type="radio" name={quiz.id} value="a" onchange={changehandler}/>
+                            {quiz.answers.a}
+                        </div>
+                        <div class="slds-col">
+                            <input type="radio" name={quiz.id} value="b" onchange={changehandler}/>
+                            {quiz.answers.b}
+                        </div>
+                        <div class="slds-col">
+                            <input type="radio" name={quiz.id} value="c" onchange={changehandler}/>
+                            {quiz.answers.c}
+                        </div>
+                        <div class="slds-col">
+                            <input type="radio" name={quiz.id} value="d" onchange={changehandler}/>
+                            {quiz.answers.d}
+                        </div>
+                    </div>
+                </div>
+            </template>
+
+        <lightning-button variant="success" type="submit" label="submit" class="slds-m-around_small" title="Submit Quiz"  disabled={allNotSelected} onclick={submithandler}> </lightning-button>
+        <lightning-button variant="brand" type="reset" label="reset" class="slds-m-around_small" title="Reset Quiz" onclick={resethandler}> </lightning-button>
+        <!--It is important to mention the "type" of button, since we are using it in form, to tell what action does it perform on the form.
+            Also we give margins around the button so the buttons don't touch each other.
+            And it's always good to add a title for better accessibility so that our component works in screen reader as well-->
+            <template if:true={isSubmitted}>
+                <div class={scoreIsFull}><strong>Total Score is {score} / {myquestions.length}</strong></div>
+            </template>    
+        </form>
+        </div>
+    </lightning-card>
+</template>
